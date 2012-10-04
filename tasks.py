@@ -2,15 +2,20 @@ from fabric import api, state
 from fabric.tasks import execute
 from fabric.main import load_fabfile
 
-TEST_FABFILE = '/home/kevin/work/server_config/fabfile'
+class FabricInterface(object):
 
-def list_tasks():
-    fabfile = TEST_FABFILE
-    docstring, callables, default = load_fabfile(fabfile)
-    state.commands.update(callables)
-    return state.commands
+    def __init__(self, fabfile_path):
+        self.fabfile_path = fabfile_path
 
-def run_task(task, *args, **kwargs):
-    return execute(task, *args, **kwargs)
-    
+    def _load_fabfile(self):
+        if not state.commands:
+            docstring, callables, default = load_fabfile(self.fabfile_path)
+            state.commands.update(callables)
 
+    def list_tasks(self):
+        self._load_fabfile()
+        return state.commands
+
+    def run_task(self, task, *args, **kwargs):
+        self._load_fabfile()
+        return execute(task, *args, **kwargs)
