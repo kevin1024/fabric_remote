@@ -1,5 +1,6 @@
 from tasks import FabricInterface
 from fabric.tasks import WrappedCallableTask
+from fabric.utils import indent
 import json
 from flask import Flask, url_for
 from flask.views import MethodView
@@ -13,7 +14,7 @@ fi = FabricInterface(app.config['FABFILE_PATH'])
 class FabricEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, WrappedCallableTask):
-            return obj.name
+            return {'name': obj.name, 'description': obj.__doc__ }
         return json.JSONEncoder.default(self, obj)
 
 
@@ -27,4 +28,4 @@ def execute_task(task_name):
     
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=1234, host='0.0.0.0')
