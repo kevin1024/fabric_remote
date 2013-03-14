@@ -1,9 +1,7 @@
 from tasks import FabricInterface
 from fabric.tasks import WrappedCallableTask
-from fabric.utils import indent
 import json
-from flask import Flask, url_for
-from flask.views import MethodView
+from flask import Flask
 from flask import request
 
 app = Flask(__name__)
@@ -23,11 +21,14 @@ class FabricEncoder(json.JSONEncoder):
 def get_task():
     return json.dumps(fi.list_tasks(), cls=FabricEncoder)
 
-@app.route('/execute/<task_name>', methods=['POST'])
-def execute_task(task_name):
+@app.route('/execute/<tasks>', methods=['POST'])
+def execute_task(tasks):
+    out = ""
     params = request.form.get('params',[])
-    print "running {0}".format(task_name)
-    return json.dumps(fi.run_task(task_name, *request.form.get('args',[]), **request.form.get('kwargs',{})))
+    for task in tasks.split(","):
+        print "running {0}".format(task)
+        out += json.dumps(fi.run_task(task, *request.form.get('args',[]), **request.form.get('kwargs',{})))
+    return out
     
 
 if __name__ == '__main__':
