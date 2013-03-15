@@ -1,2 +1,2 @@
-DEBUG = True
-FABFILE_PATH = '/home/kevin/work/server_config/fabfile'
+DEBUG = False
+FABFILE_PATH = 'fabfile'

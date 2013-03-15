@@ -7,7 +7,7 @@ from flask import request
 app = Flask(__name__)
 app.debug = True
 app.config.from_object('furoshiki.default_settings')
-#app.config.from_envvar('FUROSHIKI_SETTINGS')
+app.config.from_envvar('FUROSHIKI_SETTINGS')
 
 fi = FabricInterface(app.config['FABFILE_PATH'])
 
@@ -25,7 +25,9 @@ def get_task():
 @app.route('/execute/<tasks>', methods=['POST'])
 def execute_task(tasks):
     out = ""
-    params = request.form.get('params',[])
+    params = request.form.get('params',{})
+    if request.form.get('api_key','') != app.config['API_KEY']:
+        return 'incorrect api key {0}'.format(params.get('api_key'))
     for task in tasks.split(","):
         print "running {0}".format(task)
         out += json.dumps(fi.run_task(task, *request.form.get('args',[]), **request.form.get('kwargs',{})))
