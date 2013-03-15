@@ -6,7 +6,8 @@ from flask import request
 
 app = Flask(__name__)
 app.debug = True
-app.config.from_object('default_settings')
+app.config.from_object('furoshiki.default_settings')
+#app.config.from_envvar('FUROSHIKI_SETTINGS')
 
 fi = FabricInterface(app.config['FABFILE_PATH'])
 
