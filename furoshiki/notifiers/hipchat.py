@@ -1,3 +1,4 @@
+from urllib import urlencode
 import urllib2
 
 def notify(message, config):
@@ -8,4 +9,5 @@ def notify(message, config):
         "message_format":"text",
         "color":"green",
     }
-    urllib2.urlopen('http://api.hipchat.com/v1/rooms/message?auth_token={0}'.format(config['HIPCHAT_AUTH_TOKEN']), data)
+    import pdb;pdb.set_trace()
+    urllib2.urlopen('http://api.hipchat.com/v1/rooms/message?auth_token={0}'.format(config['HIPCHAT_AUTH_TOKEN']), urlencode(data))

@@ -1,6 +1,7 @@
 from tasks import FabricInterface
 from fabric.tasks import WrappedCallableTask
 import json
+import importlib
 from flask import Flask
 from flask import request
 
@@ -11,8 +12,8 @@ app.config.from_envvar('FUROSHIKI_SETTINGS')
 
 fi = FabricInterface(app.config['FABFILE_PATH'])
 
-if app.config:
-    notifier = __import__(app.config['NOTIFIER_MODULE'])
+if 'NOTIFIER_MODULE' in app.config:
+    notifier = importlib.import_module(app.config['NOTIFIER_MODULE'])
 else:
     notifier = None
 
@@ -37,9 +38,8 @@ def execute_task(tasks):
         print "running {0}".format(task)
         out += json.dumps(fi.run_task(task, *request.form.get('args',[]), **request.form.get('kwargs',{})))
     if notifier:
-        notifier.notify("tasks {0} finished successfully".format(tasks.join(',')))
+        notifier.notify("deployment task {0} finished successfully".format(tasks), app.config)
     return out
-    
 
 if __name__ == '__main__':
     app.run(port=1234, host='0.0.0.0')
