@@ -9,5 +9,4 @@ def notify(message, config):
         "message_format":"text",
         "color":"green",
     }
-    import pdb;pdb.set_trace()
     urllib2.urlopen('http://api.hipchat.com/v1/rooms/message?auth_token={0}'.format(config['HIPCHAT_AUTH_TOKEN']), urlencode(data))

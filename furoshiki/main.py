@@ -2,6 +2,7 @@ from tasks import FabricInterface
 from fabric.tasks import WrappedCallableTask
 import json
 import importlib
+import functools
 from flask import Flask
 from flask import request
 
@@ -23,17 +24,25 @@ class FabricEncoder(json.JSONEncoder):
             return {'name': obj.name, 'description': obj.__doc__ }
         return json.JSONEncoder.default(self, obj)
 
+def verify_api_key(wrapped):
+    @functools.wraps(wrapped)
+    def inner(*args, **kwargs):
+        if request.form.get('api_key','') != app.config['API_KEY']:
+            return 'incorrect api key'
+        return wrapped(*args, **kwargs)
+    return inner
+
 
 @app.route('/tasks', methods=['GET'])
+@verify_api_key
 def get_task():
     return json.dumps(fi.list_tasks(), cls=FabricEncoder)
 
 @app.route('/execute/<tasks>', methods=['POST'])
+@verify_api_key
 def execute_task(tasks):
     out = ""
     params = request.form.get('params',{})
-    if request.form.get('api_key','') != app.config['API_KEY']:
-        return 'incorrect api key {0}'.format(params.get('api_key'))
     for task in tasks.split(","):
         print "running {0}".format(task)
         out += json.dumps(fi.run_task(task, *request.form.get('args',[]), **request.form.get('kwargs',{})))
