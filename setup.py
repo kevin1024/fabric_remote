@@ -7,5 +7,5 @@ setup(
     packages=['furoshiki'],
     include_package_data=True,
     zip_safe=False,
-    install_requires=['Flask==0.9.0','Fabric==1.6.0'],
+    install_requires=['Flask==0.9.0','Fabric==1.6.0','importlib==1.0.2'],
 )
