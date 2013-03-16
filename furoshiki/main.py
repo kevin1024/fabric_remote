@@ -11,6 +11,11 @@ app.config.from_envvar('FUROSHIKI_SETTINGS')
 
 fi = FabricInterface(app.config['FABFILE_PATH'])
 
+if app.config:
+    notifier = __import__(app.config['NOTIFIER_MODULE'])
+else:
+    notifier = None
+
 class FabricEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, WrappedCallableTask):
@@ -31,6 +36,8 @@ def execute_task(tasks):
     for task in tasks.split(","):
         print "running {0}".format(task)
         out += json.dumps(fi.run_task(task, *request.form.get('args',[]), **request.form.get('kwargs',{})))
+    if notifier:
+        notifier.notify("tasks {0} finished successfully".format(tasks.join(',')))
     return out
     
 
