@@ -37,7 +37,7 @@ def execute_task(tasks):
     out = []
     for task in tasks.split(","):
         logging.info("running {0}".format(task))
-        out.append(i.run_task(task, *request.form.get('args',[]), **request.form.get('kwargs',{})))
+        out.append(fi.run_task(task, *request.form.get('args',[]), **request.form.get('kwargs',{})))
     notifier = get_notifier()
     notifier.notify("deployment task {0} finished successfully".format(tasks), app.config)
     return json.dumps(out)
