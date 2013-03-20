@@ -19,6 +19,10 @@ Just set the FABFILE config variable to point to your Fabfile module.
 
 `POST /tasks/deploy,restart body -> {deploy: {args: ['foo', 'bar'], kwargs: {'arg1':'val1'}}, restart: {args:['now']}}`
 
+### IMPORTANT NOTE
+
+furoshiki doesn't actually pass the arugments to the tasks (yet).
+
 ## Installation
 1. `pip install furoshiki`
 
