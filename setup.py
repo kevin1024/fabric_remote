@@ -1,5 +1,13 @@
 from setuptools import setup
 
+install_requires = ['Flask==0.10.1', 'Fabric==1.6.1']
+
+#We need importlib on 2.6 but not 2.7
+try:
+    import importlib
+except ImportError:
+    install_requires.append('importlib==1.0.2')
+
 setup(
     name='Furoshiki',
     version='0.0.1',
@@ -7,5 +15,6 @@ setup(
     packages=['furoshiki'],
     include_package_data=True,
     zip_safe=False,
-    install_requires=['Flask==0.9.0','Fabric==1.6.0','importlib==1.0.2'],
+    install_requires=install_requires,
 )
+

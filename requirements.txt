@@ -1,4 +1,0 @@
-Fabric==1.6.0
-Flask==0.9
-gunicorn==0.17.2
-importlib==1.0.2
