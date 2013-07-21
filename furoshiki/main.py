@@ -6,6 +6,8 @@ import logging
 from flask import Flask
 from flask import request
 
+from furoshiki.auth import requires_auth
+
 app = Flask(__name__)
 app.debug = True
 app.config.from_object('furoshiki.default_settings')
@@ -17,22 +19,13 @@ def get_notifier():
     if app.config.get('NOTIFIER_MODULE'):
         return importlib.import_module(app.config['NOTIFIER_MODULE'])
 
-def verify_api_key(wrapped):
-    @functools.wraps(wrapped)
-    def inner(*args, **kwargs):
-        if request.form.get('api_key','') != app.config['API_KEY']:
-            return 'incorrect api key'
-        return wrapped(*args, **kwargs)
-    return inner
-
-
 @app.route('/tasks', methods=['GET'])
-@verify_api_key
+@requires_auth
 def get_task():
     return dump_fabric_json(fi.list_tasks())
 
 @app.route('/execute/<tasks>', methods=['POST'])
-@verify_api_key
+@requires_auth
 def execute_task(tasks):
     out = []
     for task in tasks.split(","):
