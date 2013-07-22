@@ -35,26 +35,17 @@ class FabricInterface(object):
         self._load_fabfile()
         return state.commands
 
-#    def _execute(self, task, *args, **kwargs):
-#        sys.stdout = captured_output
-#        self._load_fabfile()
-#        results = execute(task, *args, **kwargs)
-#        return results
-
-    def _execute(self, queue):
+    def _execute(self, tasks, queue):
+        self._load_fabfile()
         sys.stdout = Poo(queue)
-        import time
-        print "poop"
-        time.sleep(1)
-        print "poop"
-        time.sleep(1)
-        print "poop again"
-        time.sleep(1)
-        print "poop yet again"
+        sys.stderr = Poo(queue)
+        for task, args in tasks.iteritems():
+            results = execute(task, *args.get('args',[]), **args.get('kwargs',{}))
+            return results
 
-    def run_task(self, task, *args, **kwargs):
+    def run_tasks(self, tasks):
         queue = multiprocessing.Queue()
-        execute_ps = multiprocessing.Process(target=self._execute, args=[queue])
+        execute_ps = multiprocessing.Process(target=self._execute, args=[tasks, queue])
         execute_ps.start()
 
         while execute_ps.is_alive():
@@ -66,7 +57,6 @@ class FabricInterface(object):
 
         execute_ps.join()
 
-
         # suck the last goodness out of the queue before moving on
         while True:
             try:
@@ -74,7 +64,6 @@ class FabricInterface(object):
                 yield data
             except Queue.Empty:
                 break
-
 
         #results['output'] = captured_output.getvalue()
 

@@ -24,8 +24,8 @@ def get_task():
 @app.route('/executions', methods=['POST'])
 @requires_auth
 def create_execution():
-    tasks = request.json['tasks']
-    execution_id = executions.add(tasks, fi.run_task(tasks[0]))
+    tasks = request.json
+    execution_id = executions.add(tasks, fi.run_tasks(tasks))
     logging.info("creating execution for tasks {0}".format(tasks))
     return jsonify({
         "status": "/executions/{0}/status".format(execution_id), 
