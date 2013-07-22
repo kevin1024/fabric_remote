@@ -14,7 +14,7 @@ class Poo(object):
     def __init__(self, queue):
         self.queue = queue
     def write(self, data):
-        self.queue.put(data)
+        self.queue.put({'output': data})
     def isatty(self):
         return False
     def flush(self, *args, **kwargs):
@@ -41,7 +41,7 @@ class FabricInterface(object):
         sys.stderr = Poo(queue)
         for task, args in tasks.iteritems():
             results = execute(task, *args.get('args',[]), **args.get('kwargs',{}))
-            return results
+            queue.put({"results": results})
 
     def run_tasks(self, tasks):
         queue = multiprocessing.Queue()

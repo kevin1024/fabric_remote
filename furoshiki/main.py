@@ -41,9 +41,19 @@ def execution_output(execution_id):
         abort(404)
 
     def generate(ex):
-        for line in ex['output_stream'].read():
+        for line in ex['stream'].output():
             yield str(line)
     return Response(generate(ex), mimetype="text/plain")
+
+@app.route('/executions/<execution_id>/results', methods=['GET'])
+@requires_auth
+def execution_results(execution_id):
+    try:
+        ex = executions.get(int(execution_id))
+    except KeyError:
+        abort(404)
+
+    return jsonify(ex["stream"].results())
 
 if __name__ == '__main__':
     app.run(port=1234, host='0.0.0.0')
