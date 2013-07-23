@@ -48,6 +48,9 @@ class FabricInterface(object):
             queue.put({"error": str(e)})
 
     def run_tasks(self, tasks):
+        # Join whatever children are still sitting around 
+        multiprocessing.active_children()
+
         queue = multiprocessing.Queue()
         execute_ps = multiprocessing.Process(target=self._execute, args=[tasks, queue])
         execute_ps.start()
