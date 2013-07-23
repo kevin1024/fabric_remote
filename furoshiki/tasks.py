@@ -30,40 +30,48 @@ class FabricInterface(object):
         if not state.commands:
             docstring, callables, default = load_fabfile(self.fabfile_path)
             state.commands.update(callables)
+        state.env.abort_on_prompts = True #Don't prompt me bro
 
     def list_tasks(self):
         self._load_fabfile()
         return state.commands
 
     def _execute(self, tasks, queue):
-        self._load_fabfile()
         sys.stdout = Poo(queue)
         sys.stderr = Poo(queue)
-        for task, args in tasks.iteritems():
-            results = execute(task, *args.get('args',[]), **args.get('kwargs',{}))
-            queue.put({"results": results})
+        try:
+            self._load_fabfile()
+            for task, args in tasks.iteritems():
+                results = execute(task, *args.get('args',[]), **args.get('kwargs',{}))
+                queue.put({"results": results})
+        except Exception as e:
+            queue.put({"error": str(e)})
 
     def run_tasks(self, tasks):
         queue = multiprocessing.Queue()
         execute_ps = multiprocessing.Process(target=self._execute, args=[tasks, queue])
         execute_ps.start()
 
-        while execute_ps.is_alive():
-            try:
-                data = queue.get_nowait()
-                yield data
-            except Queue.Empty:
-                time.sleep(1)
+        def generate_response(execute_ps, queue):
 
-        execute_ps.join()
+            while execute_ps.is_alive():
+                try:
+                    data = queue.get_nowait()
+                    yield data
+                except Queue.Empty:
+                    time.sleep(1)
 
-        # suck the last goodness out of the queue before moving on
-        while True:
-            try:
-                data = queue.get_nowait()
-                yield data
-            except Queue.Empty:
-                break
+            execute_ps.join()
+
+            # suck the last goodness out of the queue before moving on
+            while True:
+                try:
+                    data = queue.get_nowait()
+                    yield data
+                except Queue.Empty:
+                    break
+
+        return generate_response(execute_ps, queue)
 
         #results['output'] = captured_output.getvalue()
 
