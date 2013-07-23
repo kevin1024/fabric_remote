@@ -1,5 +1,7 @@
 #This is a crappy in-memory database. Maybe replace this with a real database someday.
 
+MAX_EXECUTIONS = 10
+
 current_execution_index = 0
 executions = {}
 
@@ -35,6 +37,9 @@ def add(tasks, output_stream):
         "tasks": tasks,
         "stream": ExecutionStream(output_stream),
     }
+    if current_execution_index > MAX_EXECUTIONS:
+        print "deleting old execution # {0}".format(current_execution_index - MAX_EXECUTIONS)
+        del executions[current_execution_index - MAX_EXECUTIONS]
     current_execution_index += 1
     return current_execution_index -1
 
