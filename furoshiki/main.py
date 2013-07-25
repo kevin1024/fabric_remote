@@ -25,7 +25,8 @@ def get_task():
 @requires_auth
 def create_execution():
     tasks = request.json
-    execution_id = executions.add(tasks, fi.run_tasks(tasks))
+    ps_handle, stream = fi.run_tasks(tasks)
+    execution_id = executions.add(tasks, ps_handle, stream)
     logging.info("creating execution for tasks {0}".format(tasks))
     return jsonify({
         "status": "/executions/{0}/status".format(execution_id), 

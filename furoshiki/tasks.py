@@ -74,9 +74,7 @@ class FabricInterface(object):
                 except Queue.Empty:
                     break
 
-        return generate_response(execute_ps, queue)
-
-        #results['output'] = captured_output.getvalue()
+        return execute_ps, generate_response(execute_ps, queue)
 
 
 class FabricEncoder(json.JSONEncoder):
