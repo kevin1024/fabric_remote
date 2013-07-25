@@ -10,7 +10,7 @@ from fabric.main import load_fabfile
 from fabric.tasks import WrappedCallableTask
 from StringIO import StringIO
 
-class Poo(object):
+class QueueIO(object):
     def __init__(self, queue):
         self.queue = queue
     def write(self, data):
@@ -37,8 +37,8 @@ class FabricInterface(object):
         return state.commands
 
     def _execute(self, tasks, queue):
-        sys.stdout = Poo(queue)
-        sys.stderr = Poo(queue)
+        sys.stdout = QueueIO(queue)
+        sys.stderr = sys.stdout
         try:
             self._load_fabfile()
             for task, args in tasks.iteritems():
