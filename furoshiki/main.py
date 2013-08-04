@@ -19,7 +19,7 @@ fi = FabricInterface(app.config['FABFILE_PATH'])
 @app.route('/tasks', methods=['GET'])
 @requires_auth
 def get_task():
-    return dump_fabric_json(fi.list_tasks())
+    return Response(dump_fabric_json(fi.list_tasks()), mimetype="application/json")
 
 @app.route('/executions', methods=['POST'])
 @requires_auth

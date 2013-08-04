@@ -43,7 +43,7 @@ class FabricInterface(object):
             self._load_fabfile()
             for task, args in tasks.iteritems():
                 results = execute(task, *args.get('args',[]), **args.get('kwargs',{}))
-                queue.put({"results": results})
+                queue.put({"results": {task: results}})
         except Exception as e:
             queue.put({"error": str(e)})
 
