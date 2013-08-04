@@ -1,1 +1,0 @@
-FABFILE_PATH = 'fabfile'

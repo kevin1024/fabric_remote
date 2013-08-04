@@ -1,6 +1,5 @@
 import time
 import json
-import logging
 import sys
 import multiprocessing
 import Queue
@@ -9,6 +8,7 @@ from fabric.tasks import execute
 from fabric.main import load_fabfile
 from fabric.tasks import WrappedCallableTask
 from StringIO import StringIO
+from furoshiki.main import app
 
 class QueueIO(object):
     def __init__(self, queue):
@@ -26,7 +26,7 @@ class FabricInterface(object):
         self.fabfile_path = fabfile_path
 
     def _load_fabfile(self):
-        logging.info("loading fabfile %s" % self.fabfile_path)
+        app.logger.info("loading fabfile %s" % self.fabfile_path)
         if not state.commands:
             docstring, callables, default = load_fabfile(self.fabfile_path)
             state.commands.update(callables)
