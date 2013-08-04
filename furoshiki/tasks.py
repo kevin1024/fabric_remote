@@ -8,7 +8,7 @@ from fabric.tasks import execute
 from fabric.main import load_fabfile
 from fabric.tasks import WrappedCallableTask
 from StringIO import StringIO
-from furoshiki.main import app
+from furoshiki import app
 
 class QueueIO(object):
     def __init__(self, queue):

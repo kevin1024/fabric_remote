@@ -1,5 +1,5 @@
 import sys
-from setuptools import setup
+from setuptools import setup, find_packages
 
 install_requires = ['Flask==0.10.1', 'Fabric==1.6.1']
 
@@ -8,11 +8,11 @@ if sys.version_info < (2, 7):
 
 setup(
     name='Furoshiki',
-    version='0.0.1',
+    version='0.0.2',
     long_description=__doc__,
-    packages=['furoshiki'],
-#    include_package_data=True,
-#    zip_safe=False,
+    packages=find_packages(),
+#   include_package_data=True,
+#   zip_safe=False,
     install_requires=install_requires,
     entry_points={
         'console_scripts': {
@@ -20,4 +20,3 @@ setup(
         }
     }
 )
-
