@@ -16,6 +16,7 @@ def get_task():
 @requires_auth
 def create_execution():
     tasks = request.json
+    app.logger.info("got POST with tasks: {0}".format(tasks))
     ps_handle, stream = app.fi.run_tasks(tasks)
     execution_id = executions.add(tasks, ps_handle, stream)
     app.logger.info("creating execution for tasks {0}".format(tasks))
