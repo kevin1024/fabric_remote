@@ -21,7 +21,7 @@ def create_execution():
     execution_id = executions.add(tasks, ps_handle, stream)
     app.logger.info("creating execution for tasks {0}".format(tasks))
     return jsonify({
-        "status": "/executions/{0}/status".format(execution_id), 
+        "status": "/executions/{0}/results".format(execution_id), 
         "output": "/executions/{0}/output".format(execution_id) 
     }), 202
 
@@ -29,7 +29,7 @@ def create_execution():
 @requires_auth
 def execution_output(execution_id):
     try:
-        ex = executions.get(int(execution_id))
+        ex = executions.get(execution_id)
     except KeyError:
         abort(404)
 
@@ -42,7 +42,7 @@ def execution_output(execution_id):
 @requires_auth
 def execution_results(execution_id):
     try:
-        ex = executions.get(int(execution_id))
+        ex = executions.get(execution_id)
     except KeyError:
         abort(404)
 

@@ -1,8 +1,10 @@
-#This is a crappy in-memory database. Maybe replace this with a real database someday.
+import uuid
 
 MAX_EXECUTIONS = 50
 
-current_execution_index = 0
+# This is a crappy in-memory database. Maybe replace this with a real database someday.
+# Also, expire old ones (memory leak) - backported python3.3 lru?
+# how about pluggable DB backends?  yes.. yes yes.
 executions = {}
 
 class ExecutionStream(object):
@@ -37,17 +39,12 @@ class ExecutionStream(object):
 
 def add(tasks, ps_handle, output_stream):
     global executions
-    global current_execution_index
-    executions[current_execution_index] = {
+    execution_id = uuid.uuid1()
+    executions[execution_id] = {
         "tasks": tasks,
         "stream": ExecutionStream(ps_handle, output_stream),
     }
-    if current_execution_index > MAX_EXECUTIONS:
-        print "deleting old execution # {0}".format(current_execution_index - MAX_EXECUTIONS)
-        del executions[current_execution_index - MAX_EXECUTIONS]
-    current_execution_index += 1
-    return current_execution_index -1
+    return execution_id
 
 def get(execution_id):
-    return executions[execution_id]
-
+    return executions[uuid.UUID(execution_id)]
