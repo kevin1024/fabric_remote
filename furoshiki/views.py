@@ -23,7 +23,7 @@ def create_execution():
     return jsonify({
         "status": "/executions/{0}/status".format(execution_id), 
         "output": "/executions/{0}/output".format(execution_id) 
-    })
+    }), 202
 
 @app.route('/executions/<execution_id>/output', methods=['GET'])
 @requires_auth
