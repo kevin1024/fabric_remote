@@ -3,6 +3,7 @@ class ExecutionStream(object):
         self._ps_handle = ps_handle
         self._stream = stream
         self._output_buffer = ""
+        self._error_buffer = ""
         self._results_buffer = []
         self._finished = False
 
@@ -16,6 +17,8 @@ class ExecutionStream(object):
                 yield line["output"]
             elif "results" in line:
                 self._results_buffer.append(line["results"])
+	    elif "error" in line:
+                self._error_buffer += line["error"]
         self._finished = True
 
     def results(self):
@@ -26,4 +29,5 @@ class ExecutionStream(object):
         return {
             "finished": True,
             "results": self._results_buffer,
+            "error": self._error_buffer,
         }
