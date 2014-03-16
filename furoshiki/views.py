@@ -21,7 +21,7 @@ def create_execution():
     execution_id = executions.add(tasks, ps_handle, stream)
     app.logger.info("creating execution for tasks {0}".format(tasks))
     return jsonify({
-        "status": "/executions/{0}/results".format(execution_id), 
+        "results": "/executions/{0}/results".format(execution_id), 
         "output": "/executions/{0}/output".format(execution_id) 
     }), 202
 
