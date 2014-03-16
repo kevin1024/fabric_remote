@@ -25,6 +25,12 @@ def create_execution():
         "output": "/executions/{0}/output".format(execution_id) 
     }), 202
 
+@app.route('/executions', methods=['GET'])
+@requires_auth
+def list_executions():
+    exs = executions.all()
+    return Response(json.dumps(exs), mimetype='application/json')
+
 @app.route('/executions/<execution_id>/output', methods=['GET'])
 @requires_auth
 def execution_output(execution_id):
@@ -36,6 +42,7 @@ def execution_output(execution_id):
     def generate(ex):
         for line in ex['stream'].output():
             yield str(line)
+    # jsonify() is doing something weird to my response.
     return Response(generate(ex), mimetype="text/plain")
 
 @app.route('/executions/<execution_id>/results', methods=['GET'])

@@ -30,6 +30,7 @@ class FabricInterface(object):
         if not state.commands:
             docstring, callables, default = load_fabfile(self.fabfile_path)
             state.commands.update(callables)
+	app.logger.info("loaded %s tasks from fabfile" % len(state.commands))
         state.env.abort_on_prompts = True #Don't prompt me bro
 
     def list_tasks(self):
