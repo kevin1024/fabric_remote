@@ -22,6 +22,19 @@ now you can make HTTP requests that will run your Fabric tasks!
 
 `GET /tasks` returns list of tasks
 
+```json
+{
+    "host_type": {
+        "name": "host_type",
+        "description": null
+    },
+    "check_foo": {
+        "name": "check_foo",
+        "description": null
+    }
+}
+```
+
 ### Execute Task
 
 Send a POST request to the server with the task and args you will execute in the body.  Make sure you set the Content-Type header to application/json.  
