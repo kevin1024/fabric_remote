@@ -15,7 +15,9 @@ def get_task():
 @app.route('/executions', methods=['POST'])
 @requires_auth
 def create_execution():
-    tasks = request.json
+    tasks = request.get_json(force=True)
+    if not tasks:
+        abort(400, "Please give a task to execute")
     app.logger.info("got POST with tasks: {0}".format(tasks))
     ps_handle, stream = app.fi.run_tasks(tasks)
     execution_id = executions.add(tasks, ps_handle, stream)
