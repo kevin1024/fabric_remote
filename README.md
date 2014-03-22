@@ -31,13 +31,13 @@ The results task will return a json response:
 
 ```json
 {
-error: "",
-finished: true,
-results: [ ]
+    "error": "",
+    "finished": true,
+    "results": [ ]
 }
 ```
 
-error contains the error message, finished returns the current state of the task, and results is a list of all the return values of the tasks you ran.
+`error` contains the error message if there was an error executing your task, `finished` returns the current state of the task, and `results` is a list of all the return values of the tasks you ran.
 
 ## Installation
 1. `pip install fabric-remote`
