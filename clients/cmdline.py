@@ -1,6 +1,8 @@
 import time
 import requests
 import logging
+import json
+import sys
 
 class FuroshikiClient(object):
     def __init__(self, server_uri, username, password):
@@ -9,7 +11,6 @@ class FuroshikiClient(object):
         self.password = password
 
     def _get(self, endpoint):
-        print "GET %s" % endpoint
         return requests.get(
             self.server_uri + endpoint, 
             auth=(self.username, self.password),
@@ -17,12 +18,13 @@ class FuroshikiClient(object):
 
     def execute(self, command, *args, **kwargs):
         data = {
-            command: {"args": args, "kwargs": kwargs},
+            command: {"args": list(args), "kwargs": kwargs},
         }
         resp = requests.post(
             self.server_uri + '/executions', 
             auth=(self.username, self.password),
-            data=data
+            data=json.dumps(data),
+	    headers={'Content-type':'application/json'},
         )
         output = resp.json()
         return self._poll(output['results'])
@@ -30,13 +32,11 @@ class FuroshikiClient(object):
     def _poll(self, results_endpoint):
         while True:
             results = self._get(results_endpoint)
-	    print "-"*18
-	    print results
-	    print "-"*18
 	    if results['finished']:
                 break
             time.sleep(1)
-            print "."
+	    sys.stdout.write('.')
+	    sys.stdout.flush()
         return results['results']
 
 
