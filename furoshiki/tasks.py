@@ -42,9 +42,9 @@ class FabricInterface(object):
         sys.stderr = sys.stdout
         try:
             self._load_fabfile()
-            for task, args in tasks.iteritems():
-                results = execute(task, *args.get('args',[]), **args.get('kwargs',{}))
-                queue.put({"results": {task: results}})
+            for task in tasks:
+                results = execute(task['task'], *task.get('args',[]), **task.get('kwargs',{}))
+                queue.put({"results": (task, results)})
         except Exception as e:
             queue.put({"error": str(e)})
 
@@ -57,7 +57,6 @@ class FabricInterface(object):
         execute_ps.start()
 
         def generate_response(execute_ps, queue):
-
             while execute_ps.is_alive():
                 try:
                     data = queue.get_nowait()
