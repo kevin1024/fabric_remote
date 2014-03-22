@@ -28,10 +28,17 @@ class FuroshikiClient(object):
             headers={'Content-type':'application/json'},
         )
         output = resp.json()
+        if 'output' in output:
+            r = requests.get(
+                self.server_uri + output['output'], 
+                stream=True,
+                auth=(self.username, self.password),
+            )
+            for content in r.iter_content():
+                sys.stdout.write(content)
+                sys.stdout.flush()
         if 'results' in output:
             return self._poll(output['results'])
-        else:
-            print output
 
     def _poll(self, results_endpoint):
         while True:
