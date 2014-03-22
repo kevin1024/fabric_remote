@@ -2,9 +2,9 @@ import json
 import importlib
 import functools
 from flask import request, Response, jsonify, abort
-from furoshiki.auth import requires_auth
-from furoshiki import executions, app
-from furoshiki.tasks import dump_fabric_json
+from . import executions, app
+from .auth import requires_auth
+from .tasks import dump_fabric_json
 
 
 @app.route('/tasks', methods=['GET'])

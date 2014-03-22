@@ -1,9 +1,9 @@
-# Furoshiki
+# Fabric Remote
 
 A HTTP Rest API to Fabric.
 
 ## Requirements
-Furoshiki is written in Flask and requires Fabric to be installed.
+Fabric Remote is written in Flask and requires Fabric to be installed.
 
 Just set the FABFILE config variable to point to your Fabfile module.  
 
@@ -20,8 +20,8 @@ Just set the FABFILE config variable to point to your Fabfile module.
 `POST /tasks/deploy,restart body -> {deploy: {args: ['foo', 'bar'], kwargs: {'arg1':'val1'}}, restart: {args:['now']}}`
 
 ## Installation
-1. `pip install furoshiki`
+1. `pip install fabric-remote`
 
 ## Configuration
-1. Set the `FABFILE` configuration variable to point to your Fabfile module. It has to be importable by the Furoshiki process, so make sure it is on your `PYTHONPATH`
-2. Furoshiki is only compatible with "new-style" Fabfiles (introduced in Fabric 1.1).  It doesn't know how to deal with "old-style" tasks that don't use the @task decorator or aren't subclasses of the Task object.
+1. Set the `FABFILE` configuration variable to point to your Fabfile module. It has to be importable by the Fabric Remote process, so make sure it is on your `PYTHONPATH`
+2. Fabric Remote is only compatible with "new-style" Fabfiles (introduced in Fabric 1.1).  It doesn't know how to deal with "old-style" tasks that don't use the @task decorator or aren't subclasses of the Task object.

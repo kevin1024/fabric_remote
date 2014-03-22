@@ -1,7 +1,7 @@
 import os
 import argparse
-from furoshiki import app
-from furoshiki.tasks import FabricInterface, dump_fabric_json
+from . import app
+from .tasks import FabricInterface, dump_fabric_json
 
 def main():
     parser = argparse.ArgumentParser(description='Run the Furoshiki Fabric REST API server')
