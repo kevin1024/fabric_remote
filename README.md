@@ -5,7 +5,19 @@ A HTTP Rest API to Fabric.
 ## Requirements
 Fabric Remote is written in Flask and requires Fabric to be installed.
 
-Just set the FABFILE config variable to point to your Fabfile.  This is the filesystem path, not the python module path.
+## Quickstart
+
+```
+pip install fabric_remote
+```
+
+```
+$ fabric-remote-server --fabfile-path PATH/TO/YOUR/FABFILE.py 
+  * Running on http://0.0.0.0:1234/
+```
+
+now you can make HTTP requests that will run your Fabric tasks!
+
 ### Get Task List
 
 `GET /tasks` returns list of tasks
