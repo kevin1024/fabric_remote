@@ -1,7 +1,11 @@
 import sys
 from setuptools import setup, find_packages
 
-install_requires = ['Flask==0.10.1', 'Fabric==1.8.1']
+install_requires = [
+    'Flask==0.10.1',
+    'Fabric==1.8.1',
+    'shortuuid==0.4',
+]
 
 if sys.version_info < (2, 7):
     install_requires += ['importlib==1.0.2', 'argparse==1.2.1']
