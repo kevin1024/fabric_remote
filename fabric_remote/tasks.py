@@ -30,7 +30,7 @@ class FabricInterface(object):
         if not state.commands:
             docstring, callables, default = load_fabfile(self.fabfile_path)
             state.commands.update(callables)
-	app.logger.info("loaded %s tasks from fabfile" % len(state.commands))
+            app.logger.info("loaded %s tasks from fabfile" % len(state.commands))
         state.env.abort_on_prompts = True #Don't prompt me bro
 
     def list_tasks(self):
@@ -43,13 +43,17 @@ class FabricInterface(object):
         try:
             self._load_fabfile()
             for task in tasks:
-                results = execute(task['task'], *task.get('args',[]), **task.get('kwargs',{}))
+                results = execute(
+                    task['task'],
+                    *task.get('args',[]),
+                    **task.get('kwargs',{})
+                )
                 queue.put({"results": (task, results)})
         except Exception as e:
             queue.put({"error": str(e)})
 
     def run_tasks(self, tasks):
-        # Join whatever children are still sitting around 
+        # Join whatever children are still sitting around
         multiprocessing.active_children()
 
         queue = multiprocessing.Queue()
