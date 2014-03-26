@@ -17,7 +17,7 @@ class ExecutionStream(object):
                 yield line["output"]
             elif "results" in line:
                 self._results_buffer.append(line["results"])
-	    elif "error" in line:
+            elif "error" in line:
                 self._error_buffer += line["error"]
         self._finished = True
 

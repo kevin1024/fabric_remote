@@ -3,13 +3,26 @@ import argparse
 from . import app
 from .tasks import FabricInterface, dump_fabric_json
 
+
 def main():
-    parser = argparse.ArgumentParser(description='Run the Furoshiki Fabric REST API server')
-    parser.add_argument('--password', type=str, default=os.environ.get('PASSWORD','secret'))
-    parser.add_argument('--port', type=int, default=os.environ.get('PORT','1234'))
-    parser.add_argument('--bind', type=str, default=os.environ.get('BIND','0.0.0.0'))
-    parser.add_argument('--fabfile_path', type=str, default=os.environ.get('FABFILE_PATH','fabfile'))
-    parser.add_argument('--debug', action='store_true', default=os.environ.get('DEBUG', False))
+    parser = argparse.ArgumentParser(
+        description='Run the Furoshiki Fabric REST API server'
+    )
+    parser.add_argument(
+        '--password', type=str, default=os.environ.get('PASSWORD', 'secret')
+    )
+    parser.add_argument(
+        '--port', type=int, default=os.environ.get('PORT', '1234')
+    )
+    parser.add_argument(
+        '--bind', type=str, default=os.environ.get('BIND', '0.0.0.0')
+    )
+    parser.add_argument(
+        '--fabfile_path', type=str, default=os.environ.get('FABFILE_PATH', 'fabfile')
+    )
+    parser.add_argument(
+        '--debug', action='store_true', default=os.environ.get('DEBUG', False)
+    )
     args = parser.parse_args()
     app.debug = args.debug
     app.fi = FabricInterface(args.fabfile_path)
