@@ -10,15 +10,21 @@ from fabric.tasks import WrappedCallableTask
 from StringIO import StringIO
 from . import app
 
+
 class QueueIO(object):
+
     def __init__(self, queue):
         self.queue = queue
+
     def write(self, data):
         self.queue.put({'output': data})
+
     def isatty(self):
         return False
+
     def flush(self, *args, **kwargs):
         pass
+
 
 class FabricInterface(object):
 
@@ -30,8 +36,13 @@ class FabricInterface(object):
         if not state.commands:
             docstring, callables, default = load_fabfile(self.fabfile_path)
             state.commands.update(callables)
-            app.logger.info("loaded %s tasks from fabfile" % len(state.commands))
-        state.env.abort_on_prompts = True #Don't prompt me bro
+            app.logger.info(
+                "loaded {0} tasks from fabfile".format(
+                    len(state.commands)
+                )
+            )
+        # Don't prompt me bro
+        state.env.abort_on_prompts = True
 
     def list_tasks(self):
         self._load_fabfile()
@@ -45,8 +56,8 @@ class FabricInterface(object):
             for task in tasks:
                 results = execute(
                     task['task'],
-                    *task.get('args',[]),
-                    **task.get('kwargs',{})
+                    *task.get('args', []),
+                    **task.get('kwargs', {})
                 )
                 queue.put({"results": (task, results)})
         except Exception as e:
@@ -57,7 +68,9 @@ class FabricInterface(object):
         multiprocessing.active_children()
 
         queue = multiprocessing.Queue()
-        execute_ps = multiprocessing.Process(target=self._execute, args=[tasks, queue])
+        execute_ps = multiprocessing.Process(
+            target=self._execute, args=[tasks, queue]
+        )
         execute_ps.start()
 
         def generate_response(execute_ps, queue):
@@ -84,8 +97,12 @@ class FabricInterface(object):
 class FabricEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, WrappedCallableTask):
-            return {'name': obj.name, 'description': obj.__doc__ }
+            return {
+                'name': obj.name,
+                'description': obj.__doc__
+            }
         return json.JSONEncoder.default(self, obj)
+
 
 def dump_fabric_json(resp):
     return json.dumps(resp, cls=FabricEncoder)
