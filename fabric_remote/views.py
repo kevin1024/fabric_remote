@@ -10,7 +10,10 @@ from .tasks import dump_fabric_json
 @app.route('/tasks', methods=['GET'])
 @requires_auth
 def get_task():
-    return Response(dump_fabric_json(app.fi.list_tasks()), mimetype="application/json")
+    return Response(
+        dump_fabric_json(app.fi.list_tasks()), mimetype="application/json"
+    )
+
 
 @app.route('/executions', methods=['POST'])
 @requires_auth
@@ -23,15 +26,17 @@ def create_execution():
     execution_id = executions.add(tasks, ps_handle, stream)
     app.logger.info("creating execution for tasks {0}".format(tasks))
     return jsonify({
-        "results": "/executions/{0}/results".format(execution_id), 
-        "output": "/executions/{0}/output".format(execution_id) 
+        "results": "/executions/{0}/results".format(execution_id),
+        "output": "/executions/{0}/output".format(execution_id)
     }), 202
+
 
 @app.route('/executions', methods=['GET'])
 @requires_auth
 def list_executions():
     exs = executions.all()
     return Response(json.dumps(exs), mimetype='application/json')
+
 
 @app.route('/executions/<execution_id>/output', methods=['GET'])
 @requires_auth
@@ -47,6 +52,7 @@ def execution_output(execution_id):
     # jsonify() is doing something weird to my response.
     return Response(generate(ex), mimetype="text/plain")
 
+
 @app.route('/executions/<execution_id>/results', methods=['GET'])
 @requires_auth
 def execution_results(execution_id):
@@ -56,4 +62,3 @@ def execution_results(execution_id):
         abort(404)
 
     return jsonify(ex["stream"].results())
-

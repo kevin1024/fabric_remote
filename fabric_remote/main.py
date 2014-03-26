@@ -18,7 +18,9 @@ def main():
         '--bind', type=str, default=os.environ.get('BIND', '0.0.0.0')
     )
     parser.add_argument(
-        '--fabfile_path', type=str, default=os.environ.get('FABFILE_PATH', 'fabfile')
+        '--fabfile_path',
+        type=str,
+        default=os.environ.get('FABFILE_PATH', 'fabfile')
     )
     parser.add_argument(
         '--debug', action='store_true', default=os.environ.get('DEBUG', False)
