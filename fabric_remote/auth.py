@@ -1,5 +1,18 @@
 from functools import wraps
 from flask import request, Response
+from . import app
+
+def _secure_compare(x, y):
+    """
+    Compare 2 strings securely in order to avoid
+    a timing attack
+    """
+    if len(x) != len(y):
+        return False
+    result = 0
+    for a, b in zip(x, y):
+        result |= a ^ b
+    return result == 0
 
 
 def check_auth(username, password):
@@ -7,7 +20,7 @@ def check_auth(username, password):
     This function is called to check if a username /
     password combination is valid.
     """
-    return username == 'admin' and password == 'secret'
+    return _secure_compare(password, app.config['PASSWORD'])
 
 
 def authenticate():
