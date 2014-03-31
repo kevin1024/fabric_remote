@@ -11,7 +11,7 @@ def _secure_compare(x, y):
         return False
     result = 0
     for a, b in zip(x, y):
-        result |= a ^ b
+        result |= ord(a) ^ ord(b)
     return result == 0
 
 
