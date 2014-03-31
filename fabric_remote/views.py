@@ -2,6 +2,7 @@ import json
 import importlib
 import functools
 from flask import request, Response, jsonify, abort
+from flask_cors import cross_origin
 from . import executions, app
 from .auth import requires_auth
 from .tasks import dump_fabric_json
@@ -9,6 +10,7 @@ from .tasks import dump_fabric_json
 
 @app.route('/tasks', methods=['GET'])
 @requires_auth
+@cross_origin(headers=['Authorization','Content-Type'], supports_credentials=True, origins=['http://localhost:8000'])
 def get_task():
     return Response(
         dump_fabric_json(app.fi.list_tasks()), mimetype="application/json"
@@ -17,6 +19,7 @@ def get_task():
 
 @app.route('/executions', methods=['POST'])
 @requires_auth
+@cross_origin(headers=['Authorization','Content-Type'], supports_credentials=True, origins=['http://localhost:8000'])
 def create_execution():
     tasks = request.get_json(force=True)
     if not tasks:
@@ -33,6 +36,7 @@ def create_execution():
 
 @app.route('/executions', methods=['GET'])
 @requires_auth
+@cross_origin(headers=['Authorization','Content-Type'], supports_credentials=True, origins=['http://localhost:8000'])
 def list_executions():
     exs = executions.all()
     return Response(json.dumps(exs), mimetype='application/json')
@@ -40,6 +44,7 @@ def list_executions():
 
 @app.route('/executions/<execution_id>/output', methods=['GET'])
 @requires_auth
+@cross_origin(headers=['Authorization','Content-Type'], supports_credentials=True, origins=['http://localhost:8000'])
 def execution_output(execution_id):
     try:
         ex = executions.get(execution_id)
@@ -55,6 +60,7 @@ def execution_output(execution_id):
 
 @app.route('/executions/<execution_id>/results', methods=['GET'])
 @requires_auth
+@cross_origin(headers=['Authorization','Content-Type'], supports_credentials=True, origins=['http://localhost:8000'])
 def execution_results(execution_id):
     try:
         ex = executions.get(execution_id)

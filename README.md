@@ -68,4 +68,5 @@ The results task will return a json response:
 1. `pip install fabric-remote`
 
 ## Notes
-Fabric Remote is only compatible with "new-style" Fabfiles (introduced in Fabric 1.1).  It doesn't know how to deal with "old-style" tasks that don't use the @task decorator or aren't subclasses of the Task object.
+ * Fabric Remote is only compatible with "new-style" Fabfiles (introduced in Fabric 1.1).  It doesn't know how to deal with "old-style" tasks that don't use the @task decorator or aren't subclasses of the Task object.
+ * All responses have CORS headers to allow cross-domain requests from any host.  This could cause crossdomain attacks if you were logged into the fabric remote service in your browser.  That could be bad I guess, I should probably make this configurable.

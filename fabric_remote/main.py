@@ -29,7 +29,7 @@ def main():
     app.debug = args.debug
     app.config['PASSWORD'] = args.password
     app.fi = FabricInterface(args.fabfile_path)
-    app.run(port=args.port, host=args.bind)
+    app.run(port=args.port, host=args.bind, threaded=True)
 
 if __name__ == '__main__':
     main()
