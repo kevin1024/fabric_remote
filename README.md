@@ -2,6 +2,10 @@
 
 A HTTP Rest API to Fabric.
 
+## Development Status
+
+This project is still under heavy development and is not production-ready.
+
 ## Requirements
 Fabric Remote is written in Flask and requires Fabric to be installed.
 
