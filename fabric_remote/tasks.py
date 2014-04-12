@@ -9,6 +9,7 @@ from fabric.main import load_fabfile
 from fabric.tasks import WrappedCallableTask
 from StringIO import StringIO
 from . import app
+from .util import threadsafe_iter
 
 
 class QueueIO(object):
@@ -91,7 +92,7 @@ class FabricInterface(object):
                 except Queue.Empty:
                     break
 
-        return execute_ps, generate_response(execute_ps, queue)
+        return execute_ps, threadsafe_iter(generate_response(execute_ps, queue))
 
 
 class FabricEncoder(json.JSONEncoder):
