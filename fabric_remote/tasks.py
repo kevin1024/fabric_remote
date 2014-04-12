@@ -99,7 +99,7 @@ class FabricEncoder(json.JSONEncoder):
         if isinstance(obj, WrappedCallableTask):
             return {
                 'name': obj.name,
-                'description': obj.__doc__
+                'description': obj.__doc__.strip() if obj.__doc__ else None
             }
         return json.JSONEncoder.default(self, obj)
 
