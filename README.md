@@ -26,15 +26,14 @@ now you can make HTTP requests that will run your Fabric tasks!  The default pas
 
 ## Configuration Options
 
------------------------------------------------------------------------------------------------------
 | env variable     | cmdline option  | default          | description                               |
+| ---------------  | --------------  | ---------------- | ----------------------------------------- |
 | PASSWORD         | --password=     | secret           | HTTP Basic Auth password                  |
 | PORT             | --port=         | 1234             | HTTP port to serve                        |
 | BIND             | --bind=         | 0.0.0.0          | IP address to bind server                 |
 | CORS_HOSTS       | --cors-hosts=   |                  | Hosts to allow CORS requests              |
 | FABFILE_PATH     | --fabfile-path= | fabfile          | Path to fabfile (same as Fabric option)   | 
 | DEBUG            | --debug         | False            | Activate debug mode (logs to stdout)      | 
------------------------------------------------------------------------------------------------------
 
 ### Get Task List
 
