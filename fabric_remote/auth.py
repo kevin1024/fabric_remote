@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import request, Response
-from flask_cors import cross_origin
 from . import app
+from .cors import cors
 
 def _secure_compare(x, y):
     """
@@ -24,7 +24,7 @@ def check_auth(username, password):
     return _secure_compare(password, app.config['PASSWORD'])
 
 
-@cross_origin(headers=['Authorization','Content-Type'], supports_credentials=True, origins=['http://127.0.0.1:8000'])
+@cors
 def authenticate():
     """Sends a 401 response that enables basic auth"""
     return Response(

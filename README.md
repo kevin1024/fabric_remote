@@ -68,6 +68,10 @@ The results task will return a json response:
 
 `error` contains the error message if there was an error executing your task, `finished` returns the current state of the task, and `results` is a list of all the return values of the tasks you ran.
 
+## CORS Headers
+
+If you want to use [the javascript client](https://github.com/kevin1024/fabric-remote-js) from a browser, and it's operating on a different domain than your current domain, you will need to enable CORS headers.  You can do this either by passing the --cors-hosts command line flag or by setting the CORS_HOSTS env variable.  Make sure you understand the security implications of doing this.
+
 ## Installation
 1. `pip install fabric-remote`
 

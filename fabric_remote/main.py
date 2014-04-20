@@ -18,6 +18,9 @@ def main():
         '--bind', type=str, default=os.environ.get('BIND', '0.0.0.0')
     )
     parser.add_argument(
+        '--cors_hosts', type=str, default=os.environ.get('CORS_HOSTS','')
+    )
+    parser.add_argument(
         '--fabfile_path',
         type=str,
         default=os.environ.get('FABFILE_PATH', 'fabfile')
@@ -28,6 +31,7 @@ def main():
     args = parser.parse_args()
     app.debug = args.debug
     app.config['PASSWORD'] = args.password
+    app.config['CORS_HOSTS'] = [h.strip() for h in args.cors_hosts.split(',')] if args.cors_hosts else None
     app.fi = FabricInterface(args.fabfile_path)
     app.run(port=args.port, host=args.bind, threaded=True)
 
