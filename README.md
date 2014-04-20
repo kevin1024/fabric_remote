@@ -13,16 +13,24 @@ Right now there's only one option for authentication:  HTTP Basic Auth.  Set the
 
 ## Quickstart
 
-```
-pip install fabric_remote
+```bash
+$ pip install fabric_remote
 ```
 
-```
+```bash
 $ fabric-remote-server --fabfile-path PATH/TO/YOUR/FABFILE.py 
   * Running on http://0.0.0.0:1234/
 ```
 
-now you can make HTTP requests that will run your Fabric tasks!  The default password is "secret"
+now you can make HTTP requests that will run your Fabric tasks!
+
+```bash
+$ curl http://localhost:1234/executions -X POST --user admin:secret -H Content-Type:application/json -d "[{\"task\": \"host_type\", \"args\": [], \"kwargs\": {}}]"
+{
+  "output": "/executions/zDUxHCMX5SBR4C4Xu9PDdB/output",
+  "results": "/executions/zDUxHCMX5SBR4C4Xu9PDdB/results"
+}
+```
 
 ## Configuration Options
 
@@ -88,9 +96,18 @@ If you want to use [the javascript client](https://github.com/kevin1024/fabric-r
 ## Installation
 1. `pip install fabric-remote`
 
+## Clients
+
+There are some clients I have written to use Fabric Remote, in various stages of development.
+
+ * [Python Command-line client](https://github.com/kevin1024/fabric_remote/blob/master/clients/cmdline.py)
+ * [JavaScript Client](https://github.com/kevin1024/fabric-remote-js)
+ * [Web Client](https://github.com/kevin1024/fabric_remote_web)
+
 ## Notes
  * Fabric Remote is only compatible with "new-style" Fabfiles (introduced in Fabric 1.1).  It doesn't know how to deal with "old-style" tasks that don't use the @task decorator or aren't subclasses of the Task object.
  * All responses have CORS headers to allow cross-domain requests from any host.  This could cause crossdomain attacks if you were logged into the fabric remote service in your browser.  That could be bad I guess, I should probably make this configurable.
+ * Python 3.x is not supported, since Fabric itself does not support Python 3.
 
 ## License
 
