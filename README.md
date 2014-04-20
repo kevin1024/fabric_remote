@@ -4,12 +4,12 @@
 
 A HTTP Rest API to Fabric.
 
-## Development Status
+## Project Goals
+Fabric Remote is intended to be a simple thin layer around your Fabric tasks.  I'm using it to automate deployments but you can use it to add an API to any sort of remote executions.  I have tried to make Fabric Remote as thin and simple as possible, with almost no configuration.  It directly exposes your Fabric tasks over HTTP.
 
-This project is still under heavy development and is not production-ready.
+## Authentication
 
-## Requirements
-Fabric Remote is written in Flask and requires Fabric to be installed.
+Right now there's only one option for authentication:  HTTP Basic Auth.  Set the password in an environment variable when you start Fabric Remote, and send it when making requests.
 
 ## Quickstart
 
@@ -22,7 +22,19 @@ $ fabric-remote-server --fabfile-path PATH/TO/YOUR/FABFILE.py
   * Running on http://0.0.0.0:1234/
 ```
 
-now you can make HTTP requests that will run your Fabric tasks!
+now you can make HTTP requests that will run your Fabric tasks!  The default password is "secret"
+
+## Configuration Options
+
+-----------------------------------------------------------------------------------------------------
+| env variable     | cmdline option  | default          | description                               |
+| PASSWORD         | --password=     | secret           | HTTP Basic Auth password                  |
+| PORT             | --port=         | 1234             | HTTP port to serve                        |
+| BIND             | --bind=         | 0.0.0.0          | IP address to bind server                 |
+| CORS_HOSTS       | --cors-hosts=   |                  | Hosts to allow CORS requests              |
+| FABFILE_PATH     | --fabfile-path= | fabfile          | Path to fabfile (same as Fabric option)   | 
+| DEBUG            | --debug         | False            | Activate debug mode (logs to stdout)      | 
+-----------------------------------------------------------------------------------------------------
 
 ### Get Task List
 
