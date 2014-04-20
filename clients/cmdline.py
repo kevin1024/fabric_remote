@@ -5,7 +5,7 @@ import logging
 import json
 import requests
 
-class FuroshikiClient(object):
+class FabricRemoteClient(object):
     def __init__(self, server_uri, username, password):
         self.server_uri = server_uri
         self.username = username
@@ -13,7 +13,7 @@ class FuroshikiClient(object):
 
     def _get(self, endpoint):
         return requests.get(
-            self.server_uri + endpoint, 
+            self.server_uri + endpoint,
             auth=(self.username, self.password),
         ).json()
 
@@ -22,7 +22,7 @@ class FuroshikiClient(object):
         for t in tasks:
             data.append(({'task': t, 'args': [], 'kwargs': {}}))
         resp = requests.post(
-            self.server_uri + '/executions', 
+            self.server_uri + '/executions',
             auth=(self.username, self.password),
             data=json.dumps(data),
             headers={'Content-type':'application/json'},
@@ -30,7 +30,7 @@ class FuroshikiClient(object):
         output = resp.json()
         if 'output' in output:
             r = requests.get(
-                self.server_uri + output['output'], 
+                self.server_uri + output['output'],
                 stream=True,
                 auth=(self.username, self.password),
             )
@@ -54,7 +54,7 @@ class FuroshikiClient(object):
         return results['results']
 
 def main(username, password, url, tasks):
-    fc = FuroshikiClient('http://localhost:1234', 'admin', 'secret')
+    fc = FabricRemoteClient('http://localhost:1234', 'admin', 'secret')
     print fc.execute(tasks)
 
 if __name__ == '__main__':

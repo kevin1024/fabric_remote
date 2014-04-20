@@ -6,7 +6,7 @@ from .tasks import FabricInterface, dump_fabric_json
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Run the Furoshiki Fabric REST API server'
+        description='Run the Fabric Remote REST API server'
     )
     parser.add_argument(
         '--password', type=str, default=os.environ.get('PASSWORD', 'secret')
