@@ -5,6 +5,7 @@ install_requires = [
     'Flask==0.10.1',
     'Fabric==1.8.1',
     'shortuuid==0.4',
+    'Flask-Cors==1.2.1',
 ]
 
 if sys.version_info < (2, 7):
