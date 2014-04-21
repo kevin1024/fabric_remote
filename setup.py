@@ -33,8 +33,8 @@ setup(
     tests_require=['mock==1.0.1','pytest==2.5.2'],
     cmdclass = {'test': PyTest},
     entry_points={
-        'console_scripts': {
+        'console_scripts': [
             'fabric-remote-server = fabric_remote.main:main'
-        }
+        ]
     }
 )
