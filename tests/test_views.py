@@ -1,8 +1,11 @@
 import base64
 import mock
-import fabric_remote 
+import fabric_remote
 import json
 from utils import get_with_auth, post_with_auth
+
+def setup_module():
+    fabric_remote.app.config['PASSWORD'] = 'secret'
 
 def test_unauthorized_list_tasks():
     client = fabric_remote.app.test_client()
@@ -37,7 +40,7 @@ def test_create_execution():
     fabric_remote.app.fi.run_tasks.return_value = ('foo','bar')
     client = fabric_remote.app.test_client()
     response = post_with_auth(
-        client, 
+        client,
         '/executions',
         json.dumps({"task": "test"})
     )
