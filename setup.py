@@ -25,7 +25,7 @@ if sys.version_info < (2, 7):
     install_requires += ['importlib==1.0.2', 'argparse==1.2.1']
 
 setup(
-    name='Fabric Remote',
+    name='fabric_remote',
     version='0.0.1',
     long_description=__doc__,
     packages=find_packages(),
