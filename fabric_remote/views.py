@@ -2,14 +2,13 @@ import json
 import importlib
 import functools
 from flask import request, Response, jsonify, abort
-from flask_cors import cross_origin
 from . import executions, app
 from .auth import requires_auth
 from .cors import cors
 from .tasks import dump_fabric_json
 
 
-@app.route('/tasks', methods=['GET'])
+@app.route('/tasks', methods=['GET','OPTIONS'])
 @requires_auth
 @cors
 def get_task():
@@ -18,7 +17,7 @@ def get_task():
     )
 
 
-@app.route('/executions', methods=['GET'])
+@app.route('/executions', methods=['GET','OPTIONS'])
 @requires_auth
 @cors
 def list_executions():
@@ -43,7 +42,7 @@ def create_execution():
     }), 202
 
 
-@app.route('/executions/<execution_id>/output', methods=['GET'])
+@app.route('/executions/<execution_id>/output', methods=['GET', 'OPTIONS'])
 @requires_auth
 @cors
 def execution_output(execution_id):
@@ -59,7 +58,7 @@ def execution_output(execution_id):
     return Response(generate(ex), mimetype="text/plain")
 
 
-@app.route('/executions/<execution_id>/results', methods=['GET'])
+@app.route('/executions/<execution_id>/results', methods=['GET', 'OPTIONS'])
 @requires_auth
 @cors
 def execution_results(execution_id):
