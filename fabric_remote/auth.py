@@ -3,6 +3,7 @@ from flask import request, Response
 from . import app
 from .cors import cors
 
+
 def _secure_compare(x, y):
     """
     Compare 2 strings securely in order to avoid

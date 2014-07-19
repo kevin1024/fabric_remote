@@ -9,7 +9,7 @@ def cors(fun):
         if not app.config.get('CORS_HOSTS'):
             return fun(*args, **kwargs)
         return cross_origin(
-            headers=['Authorization','Content-Type'],
+            headers=['Authorization', 'Content-Type'],
             supports_credentials=True,
             origins=app.config['CORS_HOSTS'],
         )(fun)(*args, **kwargs)

@@ -8,7 +8,7 @@ from .cors import cors
 from .tasks import dump_fabric_json
 
 
-@app.route('/tasks', methods=['GET','OPTIONS'])
+@app.route('/tasks', methods=['GET', 'OPTIONS'])
 @requires_auth
 @cors
 def get_task():
@@ -17,7 +17,7 @@ def get_task():
     )
 
 
-@app.route('/executions', methods=['GET','OPTIONS'])
+@app.route('/executions', methods=['GET', 'OPTIONS'])
 @requires_auth
 @cors
 def list_executions():
