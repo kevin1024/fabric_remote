@@ -18,7 +18,7 @@ def main():
         '--bind', type=str, default=os.environ.get('BIND', '0.0.0.0')
     )
     parser.add_argument(
-        '--cors-hosts', type=str, default=os.environ.get('CORS_HOSTS','')
+        '--cors-hosts', type=str, default=os.environ.get('CORS_HOSTS', '')
     )
     parser.add_argument(
         '--fabfile-path',

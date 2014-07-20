@@ -5,7 +5,9 @@ import logging
 import json
 import requests
 
+
 class FabricRemoteClient(object):
+
     def __init__(self, server_uri, username, password):
         self.server_uri = server_uri
         self.username = username
@@ -25,7 +27,7 @@ class FabricRemoteClient(object):
             self.server_uri + '/executions',
             auth=(self.username, self.password),
             data=json.dumps(data),
-            headers={'Content-type':'application/json'},
+            headers={'Content-type': 'application/json'},
         )
         output = resp.json()
         if 'output' in output:
@@ -53,6 +55,7 @@ class FabricRemoteClient(object):
             return None
         return results['results']
 
+
 def main(username, password, url, tasks):
     fc = FabricRemoteClient('http://localhost:1234', 'admin', 'secret')
     print fc.execute(tasks)
@@ -60,9 +63,12 @@ def main(username, password, url, tasks):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run a remote fabric task')
     parser.add_argument('tasks', nargs='+', help='task to run')
-    parser.add_argument('--username', dest='username', required=True, help='Remote server username')
-    parser.add_argument('--password', dest='password', required=True, help='Remote server password')
-    parser.add_argument('--url', dest='url', required=True, help='Remote server URL')
+    parser.add_argument('--username', dest='username',
+                        required=True, help='Remote server username')
+    parser.add_argument('--password', dest='password',
+                        required=True, help='Remote server password')
+    parser.add_argument('--url', dest='url', required=True,
+                        help='Remote server URL')
 
     args = parser.parse_args()
     main(args.username, args.password, args.url, args.tasks)

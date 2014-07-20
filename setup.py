@@ -9,6 +9,7 @@ install_requires = [
     'Flask-Cors==1.2.1',
 ]
 
+
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
@@ -28,13 +29,15 @@ setup(
     name='fabric_remote',
     version='0.0.1',
     long_description=__doc__,
+    description='REST API for Fabric',
+    url='https://github.com/kevin1024/fabric_remote/',
     packages=find_packages(),
     install_requires=install_requires,
-    tests_require=['mock==1.0.1','pytest==2.5.2'],
-    cmdclass = {'test': PyTest},
+    tests_require=['mock==1.0.1', 'pytest==2.5.2'],
+    cmdclass={'test': PyTest},
     entry_points={
         'console_scripts': [
-            'fabric-remote-server = fabric_remote.main:main'
+            'fabric-remote-server=fabric_remote.main:main'
         ]
     }
 )
