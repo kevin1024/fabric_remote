@@ -33,7 +33,7 @@ setup(
     url='https://github.com/kevin1024/fabric_remote/',
     packages=find_packages(),
     install_requires=install_requires,
-    tests_require=['mock==1.0.1', 'pytest==2.5.2'],
+    tests_require=['mock', 'pytest', 'requests'],
     cmdclass={'test': PyTest},
     entry_points={
         'console_scripts': [
