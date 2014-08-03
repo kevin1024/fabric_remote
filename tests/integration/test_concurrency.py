@@ -8,13 +8,16 @@ import pytest
 from fabric_remote import app
 from fabric_remote.tasks import FabricInterface, dump_fabric_json
 
+dir = os.path.dirname(__file__)
+fixture_path = os.path.join(dir, '../fixtures/')
+
 
 @pytest.yield_fixture()
 def server():
     PORT = 12345
     pid = os.fork()
     if pid == 0:
-        os.chdir('/Users/kevin/work/fabric_remote/tests/fixtures')
+        os.chdir(fixture_path)
         app.fi = FabricInterface('fabfile')
         app.config['PASSWORD'] = 'secret'
         app.run(port=PORT, debug=True, use_reloader=False)
