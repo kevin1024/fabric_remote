@@ -1,7 +1,7 @@
 import os
 import argparse
 from . import app
-from .tasks import FabricInterface, dump_fabric_json
+from .tasks import FabricInterface
 
 
 def main():
