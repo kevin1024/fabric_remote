@@ -3,6 +3,7 @@
 ![vcr.py](https://raw.github.com/kevin1024/fabric_remote/master/logo.png)
 
 A HTTP Rest API to Fabric.
+[![Build Status](https://travis-ci.org/kevin1024/fabric_remote.svg?branch=master)](https://travis-ci.org/kevin1024/fabric_remote)
 
 ## Project Goals
 Fabric Remote is intended to be a simple thin layer around your Fabric tasks.  I'm using it to automate deployments but you can use it to add an API to any sort of remote executions.  I have tried to make Fabric Remote as thin and simple as possible, with almost no configuration.  It directly exposes your Fabric tasks over HTTP.
