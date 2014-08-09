@@ -27,7 +27,7 @@ if sys.version_info < (2, 7):
 
 setup(
     name='fabric_remote',
-    version='0.0.1',
+    version='0.0.2',
     long_description=__doc__,
     description='REST API for Fabric',
     url='https://github.com/kevin1024/fabric_remote/',

@@ -7,9 +7,11 @@ from fabric import state
 from fabric.tasks import execute
 from fabric.main import load_fabfile
 from fabric.tasks import WrappedCallableTask
-from StringIO import StringIO
 from . import app
 from .util import threadsafe_iter
+
+class FabricException(Exception):
+    pass
 
 
 class QueueIO(object):
@@ -44,6 +46,8 @@ class FabricInterface(object):
             )
         # Don't prompt me bro
         state.env.abort_on_prompts = True
+        # Let us capture exceptions
+        state.env.abort_exception = FabricException
 
     def list_tasks(self):
         self._load_fabfile()
@@ -61,7 +65,7 @@ class FabricInterface(object):
                     **task.get('kwargs', {})
                 )
                 queue.put({"results": (task, results)})
-        except Exception as e:
+        except FabricException as e:
             queue.put({"error": str(e)})
 
     def run_tasks(self, tasks):

@@ -12,9 +12,7 @@ def host_type():
     local('echo blah')
     time.sleep(4)
     local('echo blah')
-    time.sleep(4)
     local('echo blah')
-    time.sleep(4)
     local('echo blah')
     env['foo'] = 'bar'
     return "shit worked"
