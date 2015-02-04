@@ -1,6 +1,6 @@
 # Fabric Remote
 
-![vcr.py](https://raw.github.com/kevin1024/fabric_remote/master/logo.png)
+![Fabric Remote](https://raw.github.com/kevin1024/fabric_remote/master/logo.png)
 
 A HTTP Rest API to Fabric.
 [![Build Status](https://travis-ci.org/kevin1024/fabric_remote.svg?branch=master)](https://travis-ci.org/kevin1024/fabric_remote)
