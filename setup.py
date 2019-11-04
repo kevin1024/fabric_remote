@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
 install_requires = [
-    'Flask==0.10.1',
+    'Flask==1.0',
     'Fabric==1.8.1',
     'shortuuid==0.4',
     'Flask-Cors==1.2.1',
