@@ -6,7 +6,7 @@ install_requires = [
     'Flask==0.10.1',
     'Fabric==1.8.1',
     'shortuuid==0.4',
-    'Flask-Cors==1.2.1',
+    'Flask-Cors==3.0.9',
 ]
 
 
